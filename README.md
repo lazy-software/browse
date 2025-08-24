@@ -10,7 +10,7 @@ This project is an Android web browser built on top of Mozilla’s [Android Comp
 
 ### Fetching Upstream Changes
 
-Pull upstream changes regularly.
+Fetch upstream changes regularly.
 
     git remote add upstream https://github.com/mozilla-mobile/reference-browser.git
     git fetch upstream

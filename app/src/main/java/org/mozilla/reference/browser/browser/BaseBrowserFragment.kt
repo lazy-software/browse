@@ -125,8 +125,8 @@ abstract class BaseBrowserFragment :
                 val grantResults =
                     results.values
                         .map {
-                        if (it) PackageManager.PERMISSION_GRANTED else PackageManager.PERMISSION_DENIED
-                    }.toIntArray()
+                            if (it) PackageManager.PERMISSION_GRANTED else PackageManager.PERMISSION_DENIED
+                        }.toIntArray()
                 downloadsFeature.withFeature {
                     it.onPermissionsResult(permissions, grantResults)
                 }
@@ -138,8 +138,8 @@ abstract class BaseBrowserFragment :
                 val grantResults =
                     results.values
                         .map {
-                        if (it) PackageManager.PERMISSION_GRANTED else PackageManager.PERMISSION_DENIED
-                    }.toIntArray()
+                            if (it) PackageManager.PERMISSION_GRANTED else PackageManager.PERMISSION_DENIED
+                        }.toIntArray()
                 sitePermissionFeature.withFeature {
                     it.onPermissionsResult(permissions, grantResults)
                 }
@@ -151,8 +151,8 @@ abstract class BaseBrowserFragment :
                 val grantResults =
                     results.values
                         .map {
-                        if (it) PackageManager.PERMISSION_GRANTED else PackageManager.PERMISSION_DENIED
-                    }.toIntArray()
+                            if (it) PackageManager.PERMISSION_GRANTED else PackageManager.PERMISSION_DENIED
+                        }.toIntArray()
                 promptsFeature.withFeature {
                     it.onPermissionsResult(permissions, grantResults)
                 }
@@ -400,17 +400,15 @@ abstract class BaseBrowserFragment :
             view = view,
         )
 
-        if (BuildConfig.MOZILLA_OFFICIAL) {
-            webAuthnFeature.set(
-                feature = WebAuthnFeature(
-                    requireComponents.core.engine,
-                    requireActivity(),
-                    requireComponents.useCases.sessionUseCases.exitFullscreen::invoke,
-                ) { requireComponents.core.store.state.selectedTabId },
-                owner = this,
-                view = view,
-            )
-        }
+        webAuthnFeature.set(
+            feature = WebAuthnFeature(
+                requireComponents.core.engine,
+                requireActivity(),
+                requireComponents.useCases.sessionUseCases.exitFullscreen::invoke,
+            ) { requireComponents.core.store.state.selectedTabId },
+            owner = this,
+            view = view,
+        )
 
         val composeView = view.findViewById<ComposeView>(R.id.compose_view)
         if (shouldUseComposeUI) {
@@ -472,7 +470,7 @@ abstract class BaseBrowserFragment :
     ): Boolean {
         Logger.info(
             "Fragment onActivityResult received with " +
-                "requestCode: $requestCode, resultCode: $resultCode, data: $data",
+                    "requestCode: $requestCode, resultCode: $resultCode, data: $data",
         )
 
         return activityResultHandler.any { it.onActivityResult(requestCode, data, resultCode) }

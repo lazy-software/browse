@@ -71,11 +71,6 @@ android {
         animationsDisabled = true
     }
 
-    lintOptions {
-        lintConfig = file("lint.xml")
-        baseline file("lint-baseline.xml")
-        disable 'GradleDependency', 'AndroidGradlePluginVersion'
-    }
 
     splits {
         abi {
@@ -92,6 +87,10 @@ android {
     }
 
     namespace = 'org.mozilla.reference.browser'
+    lint {
+        baseline file('lint-baseline.xml')
+        disable 'GradleDependency', 'AndroidGradlePluginVersion'
+    }
 }
 
 kotlin {

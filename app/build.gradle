@@ -7,6 +7,7 @@ plugins {
     alias libs.plugins.compose.compiler
     alias libs.plugins.dependency.analysis
     alias libs.plugins.kotlin.android
+    alias libs.plugins.kotlin.plugin.serialization
 }
 
 import com.android.build.api.variant.FilterConfiguration
@@ -71,11 +72,6 @@ android {
         animationsDisabled = true
     }
 
-    lintOptions {
-        lintConfig = file("lint.xml")
-        baseline file("lint-baseline.xml")
-        disable 'GradleDependency', 'AndroidGradlePluginVersion'
-    }
 
     splits {
         abi {
@@ -92,6 +88,10 @@ android {
     }
 
     namespace = 'org.mozilla.reference.browser'
+    lint {
+        baseline file('lint-baseline.xml')
+        disable 'GradleDependency', 'AndroidGradlePluginVersion'
+    }
 }
 
 kotlin {
@@ -99,9 +99,9 @@ kotlin {
 }
 
 android.applicationVariants.configureEach { variant ->
-// Select the Glean from GeckoView.
-// `service-sync-logins` requires Glean, which pulls in glean-native,
-// but that's also provided by geckoview-omni, so now we need to select which one to use.
+    // Select the Glean from GeckoView.
+    // `servicesynclogins` requires Glean, which pulls in gleannative,
+    // but that's also provided by geckoviewomni, so now we need to select which one to use.
     project.configurations.configureEach {
         resolutionStrategy.capabilitiesResolution.withCapability("org.mozilla.telemetry:glean-native") {
             def toBeSelected = candidates.find { it.id instanceof ModuleComponentIdentifier && it.id.module.contains('geckoview') }
@@ -112,6 +112,7 @@ android.applicationVariants.configureEach { variant ->
         }
     }
 }
+
 
 dependencies {
     coreLibraryDesugaring libs.desugar.jdk.libs
@@ -155,6 +156,7 @@ dependencies {
     implementation libs.google.material
     implementation libs.jspecify
     implementation libs.kotlinx.coroutines.core
+    implementation libs.kotlinx.serialization.json
 
     implementation libs.mozilla.browser.domains
     implementation libs.mozilla.browser.engine.gecko

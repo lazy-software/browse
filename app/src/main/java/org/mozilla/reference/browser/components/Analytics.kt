@@ -9,17 +9,9 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import mozilla.components.lib.crash.CrashReporter
-import mozilla.components.lib.crash.sentry.SentryService
 import mozilla.components.lib.crash.service.CrashReporterService
-import mozilla.components.lib.crash.service.MozillaSocorroService
-import org.mozilla.geckoview.BuildConfig.MOZ_APP_BUILDID
-import org.mozilla.geckoview.BuildConfig.MOZ_APP_VENDOR
-import org.mozilla.geckoview.BuildConfig.MOZ_APP_VERSION
-import org.mozilla.geckoview.BuildConfig.MOZ_UPDATE_CHANNEL
 import org.mozilla.reference.browser.BrowserApplication
-import org.mozilla.reference.browser.BuildConfig
 import org.mozilla.reference.browser.R
-import org.mozilla.reference.browser.ext.components
 
 /**
  * Component group for all functionality related to analytics e.g. crash
@@ -29,7 +21,7 @@ class Analytics(
     private val context: Context,
 ) {
     val crashReporter: CrashReporter by lazy {
-        val services: MutableList<CrashReporterService> = mutableListOf(NoOpCrashReporterService())
+        val services: MutableList<CrashReporterService> = mutableListOf(LogcatCrashReporterService())
 
         val flags = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             PendingIntent.FLAG_IMMUTABLE
